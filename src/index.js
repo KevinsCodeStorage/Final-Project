@@ -1,5 +1,8 @@
 import Phaser from "phaser";
 import logoImg from "./assets/logo.png";
+import React from "react";
+
+import LoginForm from "../users/login";
 
 class MyGame extends Phaser.Scene {
   constructor() {
@@ -7,23 +10,24 @@ class MyGame extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("logo", logoImg);
+    this.load.script('../users/login')
   }
 
-  create() {
-    const logo = this.add.image(400, 150, "logo");
+  create ()
+  {
+  
+      this.add.script('../users/login');
+  
 
-    this.tweens.add({
-      targets: logo,
-      y: 450,
-      duration: 2000,
-      ease: "Power2",
-      yoyo: true,
-      loop: -1,
-    });
+
+      this.tweens.add({
+          targets: element,
+          y: 300,
+          duration: 3000,
+          ease: 'Power3'
+      });
   }
 }
-
 const config = {
   type: Phaser.AUTO,
   parent: "phaser-example",

@@ -11,6 +11,7 @@
   "author": "Kevin Laux, German Almonte, Omar Moreta",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-react": "^7.17.12",
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "pg": "^8.7.3",

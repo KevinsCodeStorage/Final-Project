@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
-import { useHistory } from "react-router";
-import { CurrentUser } from "../context/CurrentUser";
+//import { useHistory } from "react-router";
+//import { CurrentUser } from "../context/CurrentUser";
 
 function LoginForm() {
   const history = useHistory();

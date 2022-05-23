@@ -1,84 +1,27 @@
-import { useContext, useState } from "react";
-//import { useHistory } from "react-router";
-//import { CurrentUser } from "../context/CurrentUser";
 
-function LoginForm() {
-  const history = useHistory();
+async function handleSubmit(e) {
+  let username = e.username.value
+  let password = e.password.value
 
-  const { setCurrentUser } = useContext(CurrentUser);
+  console.log(username)
 
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
+  const response = await fetch(`http://localhost:5000/authentication/`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
+  const data = await response.json();
 
-  async function handleSubmit(e) {
-    const response = await fetch(`http://localhost:5000/authentication/`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(credentials),
-    });
-
-    const data = await response.json();
-
-    if (response.status === 200) {
-      setCurrentUser(data.user);
-      history.push(`/`);
-    } else {
-      setErrorMessage(data.message);
-    }
+  if (response.status === 200) {
+    setCurrentUser(data.user);
+    history.push(`/`);
+  } else {
+    setErrorMessage(data.message);
   }
 
-  return (
-    <main>
-      <h1>Login</h1>
-      {errorMessage !== null ? (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
-        </div>
-      ) : null}
-      <form onSubmit={handleSubmit}>
-        <div className="row">
-          <div className="col-sm-6 form-group">
-            <label htmlFor="username">Email</label>
-            <input
-              type="username"
-              required
-              value={credentials.username}
-              onChange={(e) =>
-                setCredentials({ ...credentials, username: e.target.value })
-              }
-              className="form-control"
-              id="username"
-              name="username"
-            />
-          </div>
-          <div className="col-sm-6 form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              required
-              value={credentials.password}
-              onChange={(e) =>
-                setCredentials({ ...credentials, password: e.target.value })
-              }
-              className="form-control"
-              id="password"
-              name="password"
-            />
-          </div>
-        </div>
-        <input className="btn btn-primary" type="submit" value="Login" />
-      </form>
-      <h2>Don't have an account, sign up for one here!</h2>
-      <h2>Put link to sign up page here</h2>
-    </main>
-  );
+  return false
 }
-
-export default LoginForm;

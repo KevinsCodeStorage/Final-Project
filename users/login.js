@@ -1,7 +1,7 @@
 
 async function handleSubmit(e) {
-  let username = e.username.value
-  let password = e.password.value
+  let username = document.getElementById('username').value
+  let password = document.getElementById('password').value
 
   console.log(username)
 

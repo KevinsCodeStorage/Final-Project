@@ -1,42 +1,30 @@
 import Phaser from "phaser";
-import logoImg from "./assets/logo.png";
-import React from "react";
-//import LoginForm from "../users/login";
+import { config } from "./config.js";
+import MyGame from "./assets/game";
+import BootScene from "./assets/bootscene";
+import MainmenuScene from "./assets/mainmenu";
+import PauseUI from "./assets/pauseui";
+import GameUI from "./assets/gameui";
+import WinScene from "./assets/winscene.js";
+import LoseScene from "./assets/losescene.js";
+import LoginScene from "./assets/loginscene.js";
+import RegisterScene from "./assets/registerscene.js";
 
-var config = {
-  type: Phaser.AUTO,
-  parent: "phaser-example",
-  width: 800,
-  height: 600,
-  dom: {
-    createContainer: true,
-  },
-  scene: MyGame,
-};
-
-
-
-class MyGame extends Phaser.Scene {
+class Game extends Phaser.Game {
   constructor() {
-    super();
-  }
-
-  preload() {
-    this.load.html("../users/login.html");
-    this.load.image('/assets/logo.png')
-  }
-
-  create() {
-    this.makeStuff.image(400,600,'/assets/logo.png')
-    this.add.dom(400, 600).createFromCache("../users/login.html");
-
-    this.tweens.add({
-      targets: element,
-      y: 300,
-      duration: 3000,
-      ease: "Power3",
-    });
+    super(config);
+    this.scene.add("thisGame", MyGame);
+    this.scene.add("Boot", BootScene);
+    this.scene.add("Login", LoginScene);
+    this.scene.add("Register", RegisterScene);
+    this.scene.add("Mainmenu", MainmenuScene);
+    this.scene.add("pause", PauseUI);
+    this.scene.add("interface", GameUI);
+    this.scene.add("Losing", LoseScene);
+    this.scene.add("Winning", WinScene);
+    this.scene.start("Boot");
   }
 }
-
-const game = new Phaser.Game(config);
+window.onload = function () {
+  window.game = new Game();
+};
